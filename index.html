@@ -1,0 +1,30 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="tictactoe.js"></script>
+</head>
+<body>
+<p>First Player is X, Second Player is O</p>
+<form>
+    <div id=turn>Current Turn: X</div>
+    <table>
+        <tr>
+            <td><input id="tl" type=button class="button_field" onclick="place()"/></td>
+            <td><input id="tm" type=button class="button_field" onclick="place()"/></td>
+            <td><input id="tr" type=button class="button_field" onclick="place()"/></td>
+        </tr>
+        <tr>
+            <td><input id="ml" type=button class="button_field" onclick="place()"/></td>
+            <td><input id="mm" type=button class="button_field" onclick="place()"/></td>
+            <td><input id="mr" type=button class="button_field" onclick="place()"/></td>
+        </tr>
+        <tr>
+            <td><input id="bl" type=button class="button_field" onclick="place()"/></td>
+            <td><input id="bm" type=button class="button_field" onclick="place()"/></td>
+            <td><input id="br" type=button class="button_field" onclick="place()"/></td>
+        </tr>
+    </table>
+    <input type=button value="Reset" onclick="resetGame()"/>
+</form>
+</body>
+</html>
