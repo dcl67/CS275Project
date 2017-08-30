@@ -1,30 +1,39 @@
-<html>
+
+<!DOCTYPE html>
+<html >
 <head>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="tictactoe.js"></script>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe</title>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel="stylesheet" href="tictactoe.css">
 </head>
+
 <body>
-<p>First Player is X, Second Player is O</p>
-<form>
-    <div id=turn>Current Turn: X</div>
-    <table>
-        <tr>
-            <td><input id="tl" type=button class="button_field" onclick="place()"/></td>
-            <td><input id="tm" type=button class="button_field" onclick="place()"/></td>
-            <td><input id="tr" type=button class="button_field" onclick="place()"/></td>
-        </tr>
-        <tr>
-            <td><input id="ml" type=button class="button_field" onclick="place()"/></td>
-            <td><input id="mm" type=button class="button_field" onclick="place()"/></td>
-            <td><input id="mr" type=button class="button_field" onclick="place()"/></td>
-        </tr>
-        <tr>
-            <td><input id="bl" type=button class="button_field" onclick="place()"/></td>
-            <td><input id="bm" type=button class="button_field" onclick="place()"/></td>
-            <td><input id="br" type=button class="button_field" onclick="place()"/></td>
-        </tr>
-    </table>
-    <input type=button value="Reset" onclick="resetGame()"/>
-</form>
+<h1>
+    Tic Tac Toe
+</h1>
+<div class="messages"></div>
+<div class="turn"></div>
+<table>
+    <tr>
+        <td class="item1"></td>
+        <td class="item2"></td>
+        <td class="item3"></td>
+    </tr>
+    <tr>
+        <td class="item4"></td>
+        <td class="item5"></td>
+        <td class="item6"></td>
+    </tr>
+    <tr>
+        <td class="item7"></td>
+        <td class="item8"></td>
+        <td class="item9"></td>
+    </tr>
+</table>
+<br /><input class="reset" type="button" value="Reset" />
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="tictactoe.js"></script>
+
 </body>
 </html>
