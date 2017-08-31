@@ -1,39 +1,36 @@
-
 <!DOCTYPE html>
-<html >
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Tic Tac Toe</title>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto'>
     <link rel="stylesheet" href="tictactoe.css">
 </head>
-
 <body>
+
 <h1>
     Tic Tac Toe
 </h1>
-<div class="messages"></div>
-<div class="turn"></div>
-<table>
-    <tr>
-        <td class="item1"></td>
-        <td class="item2"></td>
-        <td class="item3"></td>
-    </tr>
-    <tr>
-        <td class="item4"></td>
-        <td class="item5"></td>
-        <td class="item6"></td>
-    </tr>
-    <tr>
-        <td class="item7"></td>
-        <td class="item8"></td>
-        <td class="item9"></td>
-    </tr>
-</table>
-<br /><input class="reset" type="button" value="Reset" />
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="tictactoe.js"></script>
-
+	<button class="loginBtn loginBtn--facebook" onclick="login()">
+  		Login with Facebook
+	</button>
 </body>
 </html>
+<script>
+    function login(){
+        var ID="841527466018472";
+        var secret="031c37b13233b812cf6c180a83b40a69";
+        var URL="/fblogin";
+        $.ajax({
+            type: 'POST',
+            url: URL,
+            success: function(msg){
+                console.log('Should hopefully redirect'); //log success message
+            },
+            error: function(xhr, ajaxOptions, thrownError){
+                alert('Ajax call failed, could not redirect');
+            }
+        });
+    }
+</script>

@@ -112,7 +112,14 @@ app.get('/login/facebook/return',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
     res.render('profile', { user: req.user });
-  });*/
+  });
+
+app.get('/', function(req,res, err){
+	res.render("index.html");
+	if (err){
+		console.log(err);
+	}
+});*/
 
 app.get('/',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
@@ -127,5 +134,5 @@ app.listen(8080, function() {
 });
 
 app.get("/loggedin", function(req,res) {
-  res.render("index.html");
+  res.render("game.html");
 });
