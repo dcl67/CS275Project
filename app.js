@@ -3,14 +3,17 @@ var bodyParser = require("body-parser");
 var fs = require('fs');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var username='';
 
 passport.use(new FacebookStrategy({
 	clientID: '841527466018472',
 	clientSecret: '031c37b13233b812cf6c180a83b40a69',
-	callbackURL: "http://localhost:8080/auth/facebook/callback"
+	callbackURL: "http://localhost:8080/",
+	profileFields: ['id', 'displayName', 'name']
 },
 
 function(accessToken, refreshToken, profile, cb) {
+	username=profile.displayName;
 	return cb(null,profile);
 }
 ));
@@ -22,7 +25,12 @@ passport.deserializeUser(function(obj,cb){
 });
 
 var app = express();
-app.use(require('serve-static')(__dirname+'/../../public'));
+
+var engines = require('consolidate');
+app.set('views', __dirname);
+app.engine('html', engines.mustache); // PRAISE THE MUSTACHE
+app.set('view engine', 'html');
+
 app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(require('express-session')({
@@ -33,7 +41,7 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
-
+app.set('view engine', 'html');
 
 var mysql=require('mysql');
 var con=mysql.createConnection({
@@ -67,10 +75,11 @@ app.post('/addscore', function (req,res){
 	}
 	console.log('Adding Score...');
 	var winner=req.body;
-	//console.log('User: '+user.str+' Winner: '+winner.str);
-	console.log('Winner: '+winner.str);
-  //var add_winner="INSERT INTO `Win/Loss`.`W/L` (`User`,`Win/Loss`) VALUES ('"+user.str+"','"+winner.str+"');";
-	var add_winner="INSERT INTO `Win/Loss`.`W/L` (`Win/Loss`) VALUES ('"+winner.str+"');";
+	//console.log(username);
+	//console.log('User: '+username+' Winner: '+winner.str);
+	console.log('User: '+username+'\nWinner: '+winner.str);
+  	var add_winner="INSERT INTO `Win/Loss`.`W/L` (`User`,`Win/Loss`) VALUES ('"+username+"','"+winner.str+"');";
+	//var add_winner="INSERT INTO `Win/Loss`.`W/L` (`Win/Loss`) VALUES ('"+winner.str+"');";
 	con.query(add_winner,function(err){
 		if(err){
 			console.log('Error adding game record!');
@@ -105,11 +114,11 @@ app.get('/login/facebook/return',
     res.render('profile', { user: req.user });
   });*/
 
-app.get('/auth/facebook/callback',
+app.get('/',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     console.log('Facebook Authentication succeeded!')
-    res.redirect('/');
+    res.redirect('/loggedin');
 });
 
 app.use(express.static("."))
@@ -117,6 +126,6 @@ app.listen(8080, function() {
     console.log("Running on port 8080!");
 });
 
-app.get("/", function(req,res) {
+app.get("/loggedin", function(req,res) {
   res.render("index.html");
 });
