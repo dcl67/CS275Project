@@ -1,0 +1,9 @@
+npm install express
+nom install express-session
+npm install mysql
+npm install passport
+npm install passport-facebook
+npm install consolidate
+npm install mustache
+npm install body-parser
+npm install cookie-parser
