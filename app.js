@@ -112,9 +112,9 @@ app.get('/getpercentage', function(req,res){
 				else if (rows[i].Winner == 'O'){ycount+=1;}
 			}
 			var tot=xcount+ycount;
-			var xpercent=(xcount/tot*100);
-			var ypercent=(ycount/tot*100);
-			msg+='</table></p><br/><p>Percentage of wins.<br/>'+xpercent+' % <br/>'+ypercent+' %</p>';
+			var xpercent=(xcount/tot*100).toFixed(1);
+			var ypercent=(ycount/tot*100).toFixed(1);
+			msg+='</table></p><br/><p>Percentage of wins.<br/>X: '+xpercent+' % <br/>Y: '+ypercent+' %</p>';
 
 			//for (var i=0;i<)
 			//res.send(resp);
