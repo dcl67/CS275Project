@@ -1,9 +1,11 @@
+var percentages=$('.percentages');
 $(function() {
 
     var player='X';
     var table = $('table');
     var messages = $('.messages');
     var turn = $('.turn');
+    //var percentages=$('.percentages');
     displayNextPlayer(turn, player);
 
     $('td').click(function() {
@@ -32,6 +34,9 @@ $(function() {
         displayNextPlayer(turn, player);
     });
 
+    $('.record').click(function(){
+        getPercentage();
+    });
 });
 
 function getState(td) {
@@ -91,6 +96,24 @@ function checkIfPlayerWon(table, pattern) {
 function reset(table) {
     table.find('td').each(function() {
         $(this).removeClass('circle').removeClass('cross');
+    });
+}
+
+function getPercentage(){
+    var URL='http://localhost:8080/getpercentage';
+    $.ajax({
+        type:'GET',
+        url: URL,
+        //dataType: JSON,
+        success: function(msg){
+            //console.log(msg);
+            //percentages.html(msg);
+            document.getElementById("percentage").innerHTML=msg;
+        },
+        error: function(xhr, ajaxOptions, thrownError){
+            alert(thrownError);
+            console.log('client: could not get logs');
+        }
     });
 }
 

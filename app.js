@@ -78,7 +78,7 @@ app.post('/addscore', function (req,res){
 	//console.log(username);
 	//console.log('User: '+username+' Winner: '+winner.str);
 	console.log('User: '+username+'\nWinner: '+winner.str);
-  	var add_winner="INSERT INTO `Win/Loss`.`W/L` (`User`,`Win/Loss`) VALUES ('"+username+"','"+winner.str+"');";
+  	var add_winner="INSERT INTO `Win/Loss`.`W/L` (`User`,`Winner`) VALUES ('"+username+"','"+winner.str+"');";
 	//var add_winner="INSERT INTO `Win/Loss`.`W/L` (`Win/Loss`) VALUES ('"+winner.str+"');";
 	con.query(add_winner,function(err){
 		if(err){
@@ -90,6 +90,35 @@ app.post('/addscore', function (req,res){
 			console.log("Game record added to database");
 			var db_message=res.send("Game record added to database");
 			return db_message;
+		}
+	});
+});
+
+app.get('/getpercentage', function(req,res){
+	var xcount=0;
+	var ycount=0;
+	var msg='Results of the last few games:<br/><p>'
+	con.query("SELECT `Winner` FROM `Win/Loss`.`W/L`;",function(err,rows,fields){
+		if (err){
+			console.log('Error obtaining game record.');
+			console.log(err);
+			res.send('Server: Cannot obtain game record');
+		}
+		else{
+			console.log('Got game records');
+			for (var i=0;i<rows.length;i++){
+				msg+='<table border="1"><tr><td>'+rows[i].Winner+'</td></tr>';
+				if (rows[i].Winner == 'X'){xcount+=1;}
+				else if (rows[i].Winner == 'O'){ycount+=1;}
+			}
+			var tot=xcount+ycount;
+			var xpercent=(xcount/tot*100);
+			var ypercent=(ycount/tot*100);
+			msg+='</table></p><br/><p>Percentage of wins.<br/>'+xpercent+' % <br/>'+ypercent+' %</p>';
+
+			//for (var i=0;i<)
+			//res.send(resp);
+			res.send(msg);
 		}
 	});
 });
