@@ -13,6 +13,7 @@ passport.use(new FacebookStrategy({
 },
 
 function(accessToken, refreshToken, profile, cb) {
+	//console.log(profile);
 	username=profile.displayName;
 	return cb(null,profile);
 }
@@ -96,7 +97,7 @@ app.post('/addscore', function (req,res){
 
 app.get('/getpercentage', function(req,res){
 	var xcount=0;
-	var ycount=0;
+	var ocount=0;
 	var msg='Results of the last few games:<br/><p>'
 	con.query("SELECT `Winner` FROM `Win/Loss`.`W/L`;",function(err,rows,fields){
 		if (err){
@@ -109,12 +110,12 @@ app.get('/getpercentage', function(req,res){
 			for (var i=0;i<rows.length;i++){
 				msg+='<table border="1"><tr><td>'+rows[i].Winner+'</td></tr>';
 				if (rows[i].Winner == 'X'){xcount+=1;}
-				else if (rows[i].Winner == 'O'){ycount+=1;}
+				else if (rows[i].Winner == 'O'){ocount+=1;}
 			}
-			var tot=xcount+ycount;
+			var tot=xcount+ocount;
 			var xpercent=(xcount/tot*100).toFixed(1);
-			var ypercent=(ycount/tot*100).toFixed(1);
-			msg+='</table></p><br/><p>Percentage of wins.<br/>X: '+xpercent+' % <br/>Y: '+ypercent+' %</p>';
+			var opercent=(ocount/tot*100).toFixed(1);
+			msg+='</table></p><br/><p>Percentage of wins.<br/>X: '+xpercent+' % <br/>O: '+opercent+' %</p>';
 
 			//for (var i=0;i<)
 			//res.send(resp);
